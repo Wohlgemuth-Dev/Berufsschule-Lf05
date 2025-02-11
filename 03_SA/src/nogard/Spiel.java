@@ -88,10 +88,10 @@ public class Spiel {
 
 	private void wechselBereich(String richtung) {
 		Bereich neuerBereich = switch (richtung) {
-            case "north" -> aktiverBereich.getNord();
-            case "east" -> aktiverBereich.getOst();
-            case "south" -> aktiverBereich.getSued();
-            case "west" -> aktiverBereich.getWest();
+            case "north" -> aktiverBereich.getNachbar(Richtungen.NORTH);
+            case "east" -> aktiverBereich.getNachbar(Richtungen.EAST);
+            case "south" -> aktiverBereich.getNachbar (Richtungen.SOUTH);
+            case "west" -> aktiverBereich.getNachbar(Richtungen.WEST);
             default -> null;
         };
         // Auswertung der gefundenen Bereichs.
@@ -100,7 +100,7 @@ public class Spiel {
 		}
 		else {
 			aktiverBereich = neuerBereich;
-			ausgebenBereichsInfo();
+			System.out.println(aktiverBereich.getInfo());
 		}
 
 	}
@@ -124,27 +124,10 @@ public class Spiel {
 		System.out.println("Entdecke die Welt von Nogard. Doch Vorsicht, �berall lauern Gefahren!");
 		System.out.println("Wenn du Hilfe ben�tigst, tippe 'help'.");
 		System.out.println();
-		ausgebenBereichsInfo();
+		System.out.println(aktiverBereich.getInfo());
 	}
 
 	private static void ausgebenFehlerBefehl() {
 		System.out.println("Ich wei� nicht, was Du meinst ...");
-	}
-
-	private void ausgebenBereichsInfo() {
-		System.out.println("Du befindest dich " + aktiverBereich.getBeschreibung() + ".");
-		System.out.println("Du kannst gehen nach:");
-		if(aktiverBereich.getNord() != null) {
-			System.out.println("\tNorden.");
-		}
-		if(aktiverBereich.getOst() != null) {
-			System.out.println("\tOsten.");
-		}
-		if(aktiverBereich.getSued() != null) {
-			System.out.println("\tS�den.");
-		}
-		if(aktiverBereich.getWest() != null) {
-			System.out.println("\tWesten.");
-		}
 	}
 }

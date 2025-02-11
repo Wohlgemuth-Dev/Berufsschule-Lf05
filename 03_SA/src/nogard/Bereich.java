@@ -1,5 +1,8 @@
 package nogard;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Diese Klasse modelliert Bereiche.Ein Bereich kann ein Gebiet, ein Haus, ein Raum etc. sein.
  * 
@@ -10,10 +13,7 @@ package nogard;
 public class Bereich {
 
 	private String beschreibung;
-    private Bereich nord;
-    private Bereich ost;
-    private Bereich sued;
-    private Bereich west;
+	private Map<Richtungen, Bereich> nachbarn = new HashMap<>();
 
     /**
      * Konstruktor.
@@ -21,10 +21,10 @@ public class Bereich {
      */
     public Bereich(String beschreibung) {
         this.beschreibung = beschreibung;
-        nord = null;
-        ost = null;
-        sued = null;
-        west = null;
+        nachbarn.put(Richtungen.NORTH, null);
+		nachbarn.put(Richtungen.EAST, null);
+		nachbarn.put(Richtungen.SOUTH, null);
+		nachbarn.put(Richtungen.WEST, null);
     }
 
     /**
@@ -44,42 +44,33 @@ public class Bereich {
      * @param west	Der im Westen benachbarte Bereich.
      */
     public void setNachbarn(Bereich nord, Bereich ost, Bereich sued, Bereich west) {
-        this.nord = nord;
-        this.ost = ost;
-        this.sued = sued;
-        this.west = west;
+        nachbarn.put(Richtungen.NORTH, nord);
+		nachbarn.put(Richtungen.EAST, ost);
+		nachbarn.put(Richtungen.SOUTH, sued);
+		nachbarn.put(Richtungen.WEST, west);
     }
 
 	/**
 	 * Liefert den im Norden benachbarten Bereich.
 	 * @return Den im Norden benachbarten Bereich.
 	 */
-	public Bereich getNord() {
-		return nord;
+	public Bereich getNachbar(Richtungen richtung){
+		return nachbarn.get(richtung);
 	}
 
-	/**
-	 * Liefert den im Osten benachbarten Bereich.
-	 * @return Den im Osten benachbarten Bereich.
-	 */
-	public Bereich getOst() {
-		return ost;
+	public String getInfo(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("Du befindest dich ").append(this.getBeschreibung()).append(".");
+		sb.append("\nDu kannst gehen nach:");
+		for (Map.Entry<Richtungen, Bereich> paar : nachbarn.entrySet()) {
+			if(paar.getValue() != null) {
+				sb.append("\n\t").append(paar.getKey().name().toLowerCase());
+			}
+		}
+		// Der fertige String
+		String result = sb.toString();
+		return result;
 	}
 
-	/**
-	 * Liefert den im S�den benachbarten Bereich.
-	 * @return Den im S�den benachbarten Bereich.
-	 */
-	public Bereich getSued() {
-		return sued;
-	}
-
-	/**
-	 * Liefert den im Westen benachbarten Bereich.
-	 * @return Den im Westen benachbarten Bereich.
-	 */
-	public Bereich getWest() {
-		return west;
-	}
 
 }
