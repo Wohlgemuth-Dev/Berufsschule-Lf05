@@ -1,4 +1,4 @@
-package nogard.schritt0;
+package nogard;
 
 public class BefehlFactory {
     private static final String[] richtungsListe = {"north", "east", "south", "west"};

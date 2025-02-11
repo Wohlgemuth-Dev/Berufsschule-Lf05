@@ -1,4 +1,4 @@
-package nogard.schritt0;
+package nogard;
 
 /**
  * Diese Klasse modelliert Bereiche.Ein Bereich kann ein Gebiet, ein Haus, ein Raum etc. sein.

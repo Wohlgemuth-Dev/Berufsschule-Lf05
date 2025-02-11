@@ -1,4 +1,4 @@
-package nogard.schritt0;
+package nogard;
 
 import java.util.Scanner;
 

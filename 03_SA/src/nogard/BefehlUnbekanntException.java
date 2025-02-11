@@ -1,4 +1,4 @@
-package nogard.schritt0;
+package nogard;
 
 public class BefehlUnbekanntException extends Exception {
     private String message;
