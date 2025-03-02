@@ -25,13 +25,21 @@ public class Spiel {
 		Bereich taverne = new Bereich("in der Taverne, mit zwielichtigen Gestalten an der Theke");
 		Bereich hexenhaus = new Bereich("im finsteren Hexenhaus");
 		Bereich rathaus = new Bereich("im Rathaus von Nogard");
+		Bereich weinkeller = new Bereich("im weinkeller");
 
 		// Die Nachbarschaften festlegen.
-		friedhof.setNachbarn(null, null, hexenhaus, null);
-		wald.setNachbarn(hexenhaus, taverne, null, null);
-		taverne.setNachbarn(rathaus, null, null, wald);
-		hexenhaus.setNachbarn(friedhof, rathaus, wald, null);
-		rathaus.setNachbarn(null, null, taverne, hexenhaus);
+		friedhof.setNachbarn(Richtungen.SOUTH, hexenhaus);
+		wald.setNachbarn(Richtungen.NORTH, hexenhaus);
+		wald.setNachbarn(Richtungen.EAST, taverne);
+		taverne.setNachbarn(Richtungen.NORTH, rathaus);
+		taverne.setNachbarn(Richtungen.SOUTH, wald);
+		taverne.setNachbarn(Richtungen.DOWN, weinkeller);
+		weinkeller.setNachbarn(Richtungen.UP, taverne);
+		hexenhaus.setNachbarn(Richtungen.NORTH, friedhof);
+		hexenhaus.setNachbarn(Richtungen.EAST, rathaus);
+		hexenhaus.setNachbarn(Richtungen.SOUTH, wald);
+		rathaus.setNachbarn(Richtungen.SOUTH, taverne);
+		rathaus.setNachbarn(Richtungen.WEST, hexenhaus);
 
 		// Das Spielt startet im Wald.
 		aktiverBereich = wald;
@@ -86,14 +94,9 @@ public class Spiel {
 		return end;
 	}
 
-	private void wechselBereich(String richtung) {
-		Bereich neuerBereich = switch (richtung) {
-            case "north" -> aktiverBereich.getNachbar(Richtungen.NORTH);
-            case "east" -> aktiverBereich.getNachbar(Richtungen.EAST);
-            case "south" -> aktiverBereich.getNachbar (Richtungen.SOUTH);
-            case "west" -> aktiverBereich.getNachbar(Richtungen.WEST);
-            default -> null;
-        };
+	private void wechselBereich(String befehlszusatz) {
+		Richtungen richtung = Richtungen.valueOf(befehlszusatz.toUpperCase());
+		Bereich neuerBereich = aktiverBereich.getNachbar(richtung);
         // Auswertung der gefundenen Bereichs.
 		if (neuerBereich == null) {
 			System.out.println("Dort geht es nicht weiter.");

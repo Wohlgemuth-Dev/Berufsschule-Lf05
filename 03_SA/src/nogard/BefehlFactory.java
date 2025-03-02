@@ -1,8 +1,6 @@
 package nogard;
 
 public class BefehlFactory {
-    private static final String[] richtungsListe = {"north", "east", "south", "west"};
-
     static public Befehl createBefehl(String eingabe) throws BefehlUnbekanntException{
         if (eingabe == null || eingabe.isEmpty()) {
             throw new BefehlUnbekanntException("kein Befehl angegeben");
@@ -16,9 +14,9 @@ public class BefehlFactory {
                 if (befehl.length != 2) {
                     throw new BefehlUnbekanntException("kein korrekten Befehlszusatz angegeben");
                 }
-                for (String richtung : richtungsListe) {
-                    if (befehl[1].equals(richtung)) {
-                        return new Befehl("go", richtung);
+                for (Richtungen richtung : Richtungen.values()) {
+                    if (befehl[1].equalsIgnoreCase(richtung.name())) {
+                        return new Befehl("go", befehl[1]);
                     }
                 }
                 throw new BefehlUnbekanntException("Unbekannte Richtung: " + befehl[1]);

@@ -21,10 +21,9 @@ public class Bereich {
      */
     public Bereich(String beschreibung) {
         this.beschreibung = beschreibung;
-        nachbarn.put(Richtungen.NORTH, null);
-		nachbarn.put(Richtungen.EAST, null);
-		nachbarn.put(Richtungen.SOUTH, null);
-		nachbarn.put(Richtungen.WEST, null);
+        for (Richtungen richtung : Richtungen.values()){
+			nachbarn.put(richtung, null);
+		}
     }
 
     /**
@@ -35,19 +34,8 @@ public class Bereich {
         return beschreibung;
     }
 
-    /**
-     * Definiert die benachbarten Bereiche des Bereichs. 
-     * Jede Richtung f�hrt entweder in einen anderen Bereich oder ist 'null' (kein Ausgang).
-     * @param nord	Der im Norden benachbarte Bereich.
-     * @param ost	Der im Osten benachbarte Bereich.
-     * @param sued	Der im S�den benachbarte Bereich.
-     * @param west	Der im Westen benachbarte Bereich.
-     */
-    public void setNachbarn(Bereich nord, Bereich ost, Bereich sued, Bereich west) {
-        nachbarn.put(Richtungen.NORTH, nord);
-		nachbarn.put(Richtungen.EAST, ost);
-		nachbarn.put(Richtungen.SOUTH, sued);
-		nachbarn.put(Richtungen.WEST, west);
+    public void setNachbarn(Richtungen richtung, Bereich nachbar) {
+        nachbarn.put(richtung, nachbar);
     }
 
 	/**
