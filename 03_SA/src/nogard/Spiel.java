@@ -12,8 +12,7 @@ import java.util.Scanner;
  *  - Sie wertet die Befehle aus und sorgt f�r ihre Ausf�hrung.
  */
 public class Spiel {
-	private Bereich aktiverBereich;
-
+	private Spieler spieler;
 	public Spiel(){
 		erzeugeDorf();
 	}
@@ -26,6 +25,8 @@ public class Spiel {
 		Bereich hexenhaus = new Bereich("im finsteren Hexenhaus");
 		Bereich rathaus = new Bereich("im Rathaus von Nogard");
 		Bereich weinkeller = new Bereich("im weinkeller");
+
+		spieler = new Spieler("Tom", 20, 3000, wald);
 
 		// Die Nachbarschaften festlegen.
 		friedhof.setNachbarn(Richtungen.SOUTH, hexenhaus);
@@ -40,9 +41,6 @@ public class Spiel {
 		hexenhaus.setNachbarn(Richtungen.SOUTH, wald);
 		rathaus.setNachbarn(Richtungen.SOUTH, taverne);
 		rathaus.setNachbarn(Richtungen.WEST, hexenhaus);
-
-		// Das Spielt startet im Wald.
-		aktiverBereich = wald;
 	}
 
 	/**
@@ -96,14 +94,14 @@ public class Spiel {
 
 	private void wechselBereich(String befehlszusatz) {
 		Richtungen richtung = Richtungen.valueOf(befehlszusatz.toUpperCase());
-		Bereich neuerBereich = aktiverBereich.getNachbar(richtung);
+		Bereich neuerBereich = spieler.getBereich().getNachbar(richtung);
         // Auswertung der gefundenen Bereichs.
 		if (neuerBereich == null) {
 			System.out.println("Dort geht es nicht weiter.");
 		}
 		else {
-			aktiverBereich = neuerBereich;
-			System.out.println(aktiverBereich.getInfo());
+			spieler.geheInBereich(neuerBereich);
+			System.out.println(spieler.getBereich().getInfo());
 		}
 
 	}
@@ -127,7 +125,7 @@ public class Spiel {
 		System.out.println("Entdecke die Welt von Nogard. Doch Vorsicht, �berall lauern Gefahren!");
 		System.out.println("Wenn du Hilfe ben�tigst, tippe 'help'.");
 		System.out.println();
-		System.out.println(aktiverBereich.getInfo());
+		System.out.println(spieler.getBereich().getInfo());
 	}
 
 	private static void ausgebenFehlerBefehl() {
