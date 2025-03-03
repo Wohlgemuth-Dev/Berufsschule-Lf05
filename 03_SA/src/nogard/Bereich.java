@@ -1,6 +1,8 @@
 package nogard;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +17,8 @@ public class Bereich {
 	private String beschreibung;
 	private Map<Richtungen, Bereich> nachbarn = new HashMap<>();
 
+	private List<Gegenstand> gegenstaende = new LinkedList<>();
+
     /**
      * Konstruktor.
      * @param beschreibung	Die Beschreibung des Areals.
@@ -25,6 +29,25 @@ public class Bereich {
 			nachbarn.put(richtung, null);
 		}
     }
+
+	public void platzierenGegenstand(Gegenstand g) {
+		gegenstaende.add(g);
+	}
+
+	public void entfernenGegenstand(Gegenstand g) throws GegenstandNichtVorhandenException {
+		if (!gegenstaende.remove(g)) {
+			throw new GegenstandNichtVorhandenException("Gegenstand: " + g.getName() + " nicht vorhanden im Bereich!");
+		}
+	}
+
+	public String suchenGegenstand(String n) throws GegenstandNichtVorhandenException {
+		for (Gegenstand g : gegenstaende) {
+			if (g.getName().equalsIgnoreCase(n)) {
+				return g.getName();
+			}
+		}
+		throw new GegenstandNichtVorhandenException("Gegenstand: " + n + " nicht vorhanden!");
+	}
 
     /**
      * Liefert die Beschreibung des Bereichs.
