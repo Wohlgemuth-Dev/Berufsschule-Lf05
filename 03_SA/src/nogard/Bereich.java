@@ -40,10 +40,10 @@ public class Bereich {
 		}
 	}
 
-	public String suchenGegenstand(String n) throws GegenstandNichtVorhandenException {
+	public Gegenstand suchenGegenstand(String n) throws GegenstandNichtVorhandenException {
 		for (Gegenstand g : gegenstaende) {
 			if (g.getName().equalsIgnoreCase(n)) {
-				return g.getName();
+				return g;
 			}
 		}
 		throw new GegenstandNichtVorhandenException("Gegenstand: " + n + " nicht vorhanden!");

@@ -2,7 +2,6 @@ package nogard;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 public class Spieler {
     private String name;
@@ -44,25 +43,23 @@ public class Spieler {
         return traglast;
     }
 
-    public void aufnehmenGegenstand(Gegenstand g) throws GegenstandZuSchwerException{
+    public void aufnehmenGegenstand(String name) throws GegenstandZuSchwerException{
+        Gegenstand g = bereich.suchenGegenstand(name);
         if (g.getGewicht() + getTraglast() > maximaleTragkraft) {
             throw new GegenstandZuSchwerException("Gegenstand kann dem Inventar nicht hinzugefügt werden, da es die maximale Traglast überschreitet");
-        }
-        if (g.getName().equals(bereich.suchenGegenstand(g.getName()))) {
-            throw new GegenstandNichtVorhandenException("Gegenstand ist nicht in dem Bereich");
         }
         inventar.add(g);
         bereich.entfernenGegenstand(g);
     }
 
-    public void ablegenGegenstand(Gegenstand g) throws GegenstandNichtVorhandenException{
-        if (!inventar.remove(g)){
-            throw new GegenstandNichtVorhandenException("Gegenstand" + g.getName() + " ist nicht im Inventar");
-        }
+    public void ablegenGegenstand(String name) throws GegenstandNichtVorhandenException{
+        Gegenstand g = bereich.suchenGegenstand(name);
+        inventar.remove(g);
         bereich.platzierenGegenstand(g);
     }
 
-    public void essen(Nahrung n){
+    public void essen(String name){
+        Nahrung n = (Nahrung) bereich.suchenGegenstand(name);
         bereich.entfernenGegenstand(n);
         if (fitness + n.getNaerwert() > FITNESS_MAX) {
             fitness = FITNESS_MAX;
